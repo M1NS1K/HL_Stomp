@@ -1,4 +1,4 @@
-package com.hacker.hl.project.chat;
+package com.hacker.hl.project.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hacker.hl.project.db.ChatMessageDto;
