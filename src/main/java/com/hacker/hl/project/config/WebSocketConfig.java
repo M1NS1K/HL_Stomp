@@ -21,6 +21,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
          * endpoint 설정 : /api/v1/chat/{postId}
          * ws://localhost:9090/ws/chat 으로 요청이 들어오면 websocket 통신을 진행
          * setAllowedOrigins("*")는 모든 ip에서 접속 가능하도록 해준다. -> 모든 CORS 요청을 허용
+         * HTTP 80포트를 사용
          */
         registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*");
     }
