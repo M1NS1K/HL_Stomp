@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatMessage {
 //    // 메시지 타입 : 입장, 채팅, 나감
 //    public enum MessageType {
