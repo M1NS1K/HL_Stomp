@@ -1,7 +1,6 @@
 package com.hacker.hl.project.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hacker.hl.project.db.ChatRoom;
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
