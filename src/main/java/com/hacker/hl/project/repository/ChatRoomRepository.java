@@ -1,38 +1,42 @@
 package com.hacker.hl.project.repository;
 
 import com.hacker.hl.project.db.ChatRoomDTO;
+import com.hacker.hl.project.db.entity.ChatRoom;
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class ChatRoomRepository {
 
-    private Map<String, ChatRoomDTO> chatRoomDTOMap;
+    private final ChatRoomDTO chatRoomDTO;
+    private Map<String, ChatRoom> chatRoomDTOMap;
 
     @PostConstruct
     private void init() {
         chatRoomDTOMap = new LinkedHashMap<>();
     }
 
-    public List<ChatRoomDTO> findAllRooms() {
-        List<ChatRoomDTO> result = new ArrayList<>(chatRoomDTOMap.values());
+    public List<ChatRoom> findAllRooms() {
+        List<ChatRoom> result = new ArrayList<>(chatRoomDTOMap.values());
         Collections.reverse(result);
 
         return result;
     }
 
-    public ChatRoomDTO findRoomById(String id){
+    public ChatRoom findRoomById(String id){
         return chatRoomDTOMap.get(id);
     }
 
-    public ChatRoomDTO createChatRoomDTO(String name){
-        ChatRoomDTO room = ChatRoomDTO.create(name);
-        chatRoomDTOMap.put(room.getRoomId(), room);
+    public ChatRoom createChatRoomDTO(String name){
+        ChatRoom room = chatRoomDTO.toEntity(name);
+        chatRoomDTOMap.put(room.getName(), room);
 
         return room;
     }

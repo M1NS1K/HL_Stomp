@@ -1,6 +1,7 @@
 package com.hacker.hl.project.controller;
 
 import com.hacker.hl.project.db.entity.ChatMessage;
+import com.hacker.hl.project.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -19,11 +20,6 @@ public class ChatController {
 
         //채팅 저장
         ChatMessage chat = chatService.createChat(roomId, message.getSender(), message.getSenderEmail(), message.getMessage());
-        return ChatMessage.builder()
-                .roomId(roomId)
-                .sender(chat.getSender())
-                .senderEmail(chat.getSenderEmail())
-                .message(chat.getMessage())
-                .build();
+        return chat;
     }
 }
