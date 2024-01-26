@@ -1,5 +1,6 @@
 package com.hacker.hl.project.db;
 
+import com.hacker.hl.project.db.entity.ChatMessage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +8,15 @@ import lombok.Setter;
 @Setter
 public class ChatMessageDTO {
 
-    private String roomId;
-    private String writer;
+    private String sender;
+    private String senderEmail;
     private String message;
 
+    public ChatMessage toEntity() {
+        return ChatMessage.builder()
+                .sender(sender)
+                .senderEmail(senderEmail)
+                .message(message)
+                .build();
+    }
 }
