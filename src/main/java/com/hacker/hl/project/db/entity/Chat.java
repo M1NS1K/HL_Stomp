@@ -18,9 +18,9 @@ import org.springframework.data.annotation.CreatedDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 @Builder
 @AllArgsConstructor
+@Entity
 public class Chat {
 
     @Id
