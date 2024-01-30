@@ -1,4 +1,4 @@
-package com.hacker.hl.project;
+package com.hacker.hl.project.java;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
