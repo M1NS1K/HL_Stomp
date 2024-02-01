@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Chat Room</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
+</head>
+<body>
+<input type="text" id="senderInput" placeholder="Enter your name">
+<input type="text" id="messageInput" placeholder="Enter a message">
+<button onclick="sendMessage()">Send</button>
+<div id="chat"></div>
+
+<script type="text/javascript">
+    var socket = new SockJS('/chatroom');
+    var stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function(frame) {
+        stompClient.subscribe('/topic/messages', function(message){
+            var chat = document.getElementById('chat');
+            var messageElement = document.createElement('div');
+            var receivedMessage = JSON.parse(message.body);
+            messageElement.appendChild(document.createTextNode(receivedMessage.sender + ": " + receivedMessage.content));
+            chat.appendChild(messageElement);
+        });
+    });
+
+    function sendMessage() {
+        var senderInput = document.getElementById('senderInput');
+        var messageInput = document.getElementById('messageInput');
+        var message = { sender: senderInput.value, content: messageInput.value };
+
+        stompClient.send("/app/chat", {}, JSON.stringify(message));
+        messageInput.value = '';
+    }
+
+
+</script>
+</body>
+</html>

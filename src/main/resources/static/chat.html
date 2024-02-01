@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stomp-websocket@2.3.3/lib/stomp.min.js"></script>
+</head>
+<body>
+<div id="conversation">
+    <input type="text" id="userInput" placeholder="Enter your name..."/>
+    <input type="text" id="messageInput" placeholder="Type a message..."/>
+    <button onclick="sendMessage()">Send</button>
+</div>
+<script type="text/javascript">
+    var stompClient = null;
+    var username = null;
+
+    function connect() {
+        username = document.querySelector('#userInput').value;
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected, onError);
+    }
+
+    function onConnected() {
+        stompClient.subscribe('/topic/publicChatRoom', onMessageReceived);
+        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify({sender: username, content: "Connected!"}));
+    }
+
+    function sendMessage() {
+        var messageContent = document.querySelector('#messageInput').value.trim();
+        if(messageContent && stompClient) {
+            var chatMessage = {
+                sender: username,
+                content: messageContent
+            };
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+            document.querySelector('#messageInput').value = '';
+        }
+    }
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+        console.log('Message received: ', message.content);
+    }
+
+    function onError(error) {
+        console.log('Error: ', error);
+    }
+
+    connect(); // Automatically connects to the WebSocket
+</script>
+</body>
+</html>

@@ -5,13 +5,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ChatRoom {
 
     @Id
@@ -19,15 +23,4 @@ public class ChatRoom {
     @Column(name = "chatRoom_id")
     private Long id;
     private String name;
-
-    @Builder
-    public ChatRoom(String name) {
-        this.name = name;
-    }
-
-    public static ChatRoom createRoom(String name) {
-        return ChatRoom.builder()
-                .name(name)
-                .build();
-    }
 }
